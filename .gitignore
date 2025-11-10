@@ -1,0 +1,69 @@
+# ===== NetBairro Manager - .gitignore =====
+
+# Variáveis de ambiente
+.env
+.env.local
+.env.production
+
+# Node modules
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Logs
+logs
+*.log
+
+# Cache directories
+.cache/
+.parcel-cache/
+
+# Build outputs
+dist/
+build/
+.next/
+.nuxt/
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+
+# Firebase (local)
+.firebase/
+firebase-debug.log
+
+# Netlify
+.netlify/
+
+# Local development
+.local/
+.playwright-mcp/
+
+# Coverage reports
+coverage/
+*.lcov
+
+# Dependencies
+package-lock.json
+yarn.lock
+
+# Test files
+test-results/
+playwright-report/
