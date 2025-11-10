@@ -444,7 +444,21 @@ class FormManager {
         window.loadingManager.show('Conectando com Google...');
         
         try {
-            const user = await window.authService.loginWithGoogle();
+            // Simular login do Google para desenvolvimento local
+            // Em produção, usar Google OAuth real
+            const simulatedUser = {
+                email: 'usuario@gmail.com',
+                name: 'Usuário de Teste',
+                photoURL: 'https://via.placeholder.com/100',
+                uid: 'google_' + Date.now()
+            };
+            
+            // Salvar usuário logado
+            AppState.currentUser = simulatedUser;
+            AppState.isAuthenticated = true;
+            Utils.storage.set('currentUser', simulatedUser);
+            Utils.storage.set('isAuthenticated', true);
+            
             window.toastManager.show('Login realizado com sucesso!', 'success');
             
             setTimeout(() => {
@@ -452,7 +466,7 @@ class FormManager {
             }, 1000);
             
         } catch (error) {
-            window.toastManager.show(error.message, 'error');
+            window.toastManager.show(error.message || 'Erro no login', 'error');
         } finally {
             window.loadingManager.hide();
         }
