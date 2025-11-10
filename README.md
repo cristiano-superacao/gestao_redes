@@ -1,8 +1,8 @@
-# NetBairro Manager - Gestor de Rede de Bairro
+# Gestão de Provedores - Sistema Profissional de Gestão
 
 ## 🎯 Visão Geral
 
-Sistema profissional de gestão de rede de bairro com autenticação Google, painel administrativo e banco de dados na nuvem. Totalmente responsivo e compatível com hospedagem Netlify.
+Sistema profissional de gestão de provedores de internet com autenticação Google, painel administrativo e banco de dados na nuvem. Totalmente responsivo e compatível com hospedagem Netlify.
 
 ## ✨ Funcionalidades
 
@@ -103,7 +103,7 @@ Sistema profissional de gestão de rede de bairro com autenticação Google, pai
 
 ## 🚀 Sobre o Projeto
 
-O **NetBairro Manager** é uma solução completa e moderna para provedores de internet que precisam de uma ferramenta robusta e intuitiva para:
+O **Gestão de Provedores** é uma solução completa e moderna para provedores de internet que precisam de uma ferramenta robusta e intuitiva para:
 
 - 👥 **Gerenciar clientes** - Cadastro, edição e monitoramento completo
 - 📊 **Monitorar rede** - Análise em tempo real de performance e status

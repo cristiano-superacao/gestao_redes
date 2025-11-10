@@ -4,7 +4,7 @@ import { createClient } from '@supabase/supabase-js'
 
 const supabaseUrl = process.env.SUPABASE_URL
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
-const adminPassword = process.env.ADMIN_PASSWORD || 'NetBairro@Admin2024#'
+const adminPassword = process.env.ADMIN_PASSWORD || 'GestaoProvedores@2025#'
 
 const supabase = createClient(supabaseUrl, supabaseServiceKey)
 
