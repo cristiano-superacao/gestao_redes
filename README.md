@@ -1,100 +1,306 @@
-# Gestão de Provedores - Sistema Profissional de Gestão
+# 🌐 Gestão de Provedores - Sistema Profissional ISP
+
+<div align="center">
+
+![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)
+![License](https://img.shields.io/badge/license-MIT-green.svg)
+![Netlify](https://img.shields.io/badge/deploy-Netlify-00C7B7.svg)
+![PWA](https://img.shields.io/badge/PWA-enabled-purple.svg)
+
+**Sistema completo de gerenciamento para provedores de internet com PWA, autenticação JWT, monitoramento em tempo real e app mobile nativo.**
+
+[Demo](#) • [Documentação](#-documentação) • [Instalação](#-instalação-rápida) • [Contribuir](#-contribuindo)
+
+</div>
+
+---
 
 ## 🎯 Visão Geral
 
-Sistema profissional de gestão de provedores de internet com autenticação Google, painel administrativo e banco de dados na nuvem. Totalmente responsivo e compatível com hospedagem Netlify.
+Sistema profissional de gestão de provedores de internet (ISP) com recursos avançados:
 
-## ✨ Funcionalidades
+- 📱 **Progressive Web App (PWA)** - Funciona offline e pode ser instalado
+- 🔐 **Autenticação JWT** - Sistema seguro com tokens e refresh
+- 📊 **Monitoramento em Tempo Real** - Integração com APIs (Mikrotik, UniFi, PRTG, Zabbix)
+- 📲 **App Nativo** - Preparado para iOS e Android via Capacitor
+- 🎨 **UI Moderna** - Design responsivo e profissional
+- ☁️ **Cloud Ready** - Deploy automático no Netlify com Supabase
 
-- **Autenticação Google OAuth 2.0**
-- **Painel Administrativo** com senha de acesso
-- **Gerenciamento de Usuários** (aprovar, rejeitar, suspender)
-- **Solicitações de Acesso** com sistema de aprovação
-- **Dashboard** com estatísticas e gráficos
-- **Layout Responsivo** e profissional
-- **Banco de Dados** Supabase na nuvem
-- **Deploy Netlify** com funções serverless
+## ✨ Funcionalidades Principais
 
-## � Deploy no Netlify
+### 🔒 Autenticação & Segurança
+- ✅ Login JWT com access token (1h) e refresh token (7d)
+- ✅ Autenticação Google OAuth 2.0
+- ✅ Autenticação Microsoft (em breve)
+- ✅ Painel administrativo protegido
+- ✅ Gerenciamento de permissões por role
+
+### 📱 Progressive Web App (PWA)
+- ✅ Service Worker v1.0.0 com cache inteligente
+- ✅ Modo offline completo
+- ✅ Background sync para sincronização automática
+- ✅ Push notifications nativas
+- ✅ Instalável em desktop e mobile
+- ✅ Atalhos de aplicativo
+
+### 📊 Monitoramento de Rede
+- ✅ **Mikrotik RouterOS API** - Gestão completa de routers
+- ✅ **Ubiquiti UniFi Controller** - Devices, sites e estatísticas
+- ✅ **PRTG Network Monitor** - Sensores e monitoramento
+- ✅ **Zabbix API** - Hosts, triggers e histórico
+- ✅ Dashboard em tempo real
+- ✅ Alertas e notificações
+
+### 👥 Gestão de Clientes
+- ✅ Cadastro completo de clientes
+- ✅ Histórico de serviços
+- ✅ Sistema de tickets
+- ✅ Relatórios personalizados
+- ✅ Exportação de dados
+
+### 📲 Mobile Nativo (Capacitor)
+- ✅ Configuração para Android e iOS
+- ✅ Plugins nativos (Camera, Storage, Network)
+- ✅ Build automatizado
+- ✅ Deep linking
+
+## 🚀 Versão 2.0.0 - Novidades
+
+### 🎨 Interface Modernizada
+- ✅ Novo design do formulário de login
+- ✅ Indicador de força de senha em tempo real
+- ✅ Checkbox customizado
+- ✅ Botões com efeitos shimmer
+- ✅ Modais redesenhados e centralizados
+- ✅ Notificações com bordas coloridas por tipo
+- ✅ Animações suaves e profissionais
+
+### 🔧 Melhorias Técnicas
+- ✅ Código refatorado e otimizado
+- ✅ Sem erros de console
+- ✅ Performance aprimorada
+- ✅ SEO otimizado
+- ✅ Acessibilidade (ARIA labels)
+- ✅ 100% responsivo (320px - 4K)
+
+## 📋 Pré-requisitos
+
+- Node.js 16+ 
+- NPM ou Yarn
+- Conta Netlify (deploy)
+- Conta Supabase (banco de dados)
+- Git
+
+## 🛠️ Instalação Rápida
+
+### 1. Clone o Repositório
+
+```bash
+git clone https://github.com/cristiano-superacao/gestao_redes.git
+cd gestao_redes
+```
+
+### 2. Instale as Dependências
+
+```bash
+npm install
+```
+
+### 3. Configure as Variáveis de Ambiente
+
+Renomeie `.env.example` para `.env` e configure:
+
+```env
+# Supabase
+SUPABASE_URL=sua_url_supabase
+SUPABASE_ANON_KEY=sua_chave_publica
+SUPABASE_SERVICE_KEY=sua_chave_servico
+
+# JWT
+JWT_SECRET=seu_secret_jwt_aqui
+JWT_REFRESH_SECRET=seu_refresh_secret_aqui
+
+# APIs de Monitoramento (opcional)
+MIKROTIK_API_URL=
+UNIFI_API_URL=
+PRTG_API_URL=
+ZABBIX_API_URL=
+```
+
+### 4. Inicie o Servidor Local
+
+```bash
+npm start
+# ou
+npx http-server -p 8080
+```
+
+Acesse: **http://localhost:8080**
+
+## 🎨 Sistema de Autenticação
+
+### 👤 Login de Usuário
+```
+Email: qualquer@email.com
+Senha: qualquer (teste força de senha)
+```
+
+### 👨‍💼 Login Administrativo
+```
+Usuário: admin
+Senha: GestaoProvedores@2025#
+```
+
+## ☁️ Deploy no Netlify
 
 ### 1. Preparação do Supabase
 
 1. Acesse [Supabase](https://supabase.com) e crie uma conta
 2. Crie um novo projeto
-3. No SQL Editor, execute o schema do arquivo `.env.example`
-4. Vá em Settings > API e copie:
-   - Project URL
-   - Anon public key
-   - Service role key
+3. Copie as credenciais em Settings > API
+4. Configure as variáveis de ambiente no Netlify
 
-### � Sistema de Autenticação
+### 2. Deploy Netlify
 
-### Autenticação Google OAuth
-- Login seguro com contas Google
-- Verificação automática de domínios autorizados
-- Gerenciamento de sessões com Firebase Auth
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy)
 
-### Sistema de Administração
-- **Senha Master**: `NetBairro@Admin2024#`
-- Controle total de usuários e acessos
-- Painel administrativo completo
-- Logs de atividade detalhados
+1. Conecte seu repositório GitHub
+2. Configure as variáveis de ambiente
+3. Deploy automático a cada push
 
-### Solicitações de Acesso
-- Formulário público para solicitar acesso
-- Aprovação manual pelo administrador
-- Sistema de notificações automáticas
-- Histórico completo de solicitações
+### 3. Configuração de Variáveis
 
-## ☁️ Banco de Dados na Nuvem
+No painel do Netlify, adicione:
 
-### Firebase Firestore
-- **Capacidade**: 100+ usuários simultâneos
-- **Plano**: Gratuito (dentro dos limites)
-- **Latência**: <100ms (região São Paulo)
-- **Backup**: Automático com retenção de 30 dias
-
-### Estrutura do Banco
 ```
-├── users/              # Perfis de usuários
-├── access_requests/    # Solicitações de acesso
-├── user_activities/    # Logs de atividade
-├── admin_activities/   # Logs administrativos
-└── admin_notifications # Notificações para admin
+SUPABASE_URL=sua_url_aqui
+SUPABASE_ANON_KEY=sua_chave_aqui
+JWT_SECRET=gere_um_secret_seguro
+JWT_REFRESH_SECRET=gere_outro_secret
 ```
 
-### Monitoramento
-- Dashboard em tempo real
-- Alertas de quota
-- Métricas de performance
-- Logs de segurança
+## 📱 Build Mobile (Capacitor)
 
-## 🛡️ Segurança
+### Android
 
-### Controle de Acesso
-- Regras de segurança Firestore
-- Rate limiting para requisições
-- Validação de domínios autorizados
-- Criptografia end-to-end
+```bash
+npm run build:android
+# ou
+npx cap sync android
+npx cap open android
+```
 
-### Auditoria
-- Log completo de todas as ações
-- Rastreamento de IPs e dispositivos
-- Histórico de alterações
-- Alertas de segurança
+### iOS
 
-## 📋 Painel Administrativo
+```bash
+npm run build:ios
+# ou
+npx cap sync ios
+npx cap open ios
+```
 
-### Funcionalidades
-- ✅ **Gestão de Usuários**: Aprovar, rejeitar, suspender
-- ✅ **Solicitações**: Processar pedidos de acesso
-- ✅ **Relatórios**: Estatísticas e métricas
-- ✅ **Atividades**: Logs detalhados
-- ✅ **Configurações**: Senha, notificações, backup
+## 📚 Documentação Completa
 
-### Acesso Admin
-1. Acesse a página principal
-2. Clique em "Acesso Administrativo"
+- 📖 [Funcionalidades Avançadas](FUNCIONALIDADES_AVANCADAS.md)
+- 🔐 [Implementação Completa](IMPLEMENTACAO_COMPLETA.md)
+- 🎨 [Melhorias de Login](MELHORIAS_LOGIN.md)
+- 🔧 [Configuração de APIs](docs/api-configuration.md)
+
+## 🗂️ Estrutura do Projeto
+
+```
+gestao_redes/
+├── index.html              # Página principal com login
+├── dashboard.html          # Dashboard do sistema
+├── admin.html             # Painel administrativo
+├── manifest.json          # Configuração PWA
+├── service-worker.js      # Service Worker PWA
+├── capacitor.config.json  # Config mobile
+│
+├── css/
+│   ├── main.css           # Estilos principais
+│   ├── dashboard.css      # Estilos do dashboard
+│   ├── admin.css          # Estilos admin
+│   └── components.css     # Componentes reutilizáveis
+│
+├── js/
+│   ├── main.js            # Lógica principal
+│   ├── dashboard.js       # Lógica do dashboard
+│   ├── admin.js           # Lógica admin
+│   ├── jwt-auth.js        # Autenticação JWT
+│   ├── monitoring-service.js  # APIs de monitoramento
+│   └── demo-data.js       # Dados de demonstração
+│
+├── config/
+│   ├── database.js        # Configuração Supabase
+│   ├── firebase-config.js # Firebase (legado)
+│   └── supabase-config.js # Supabase setup
+│
+├── netlify/
+│   └── functions/
+│       ├── auth.js        # Autenticação serverless
+│       ├── monitoring.js  # Proxy APIs
+│       └── users.js       # Gestão de usuários
+│
+├── assets/                # Ícones e imagens
+├── docs/                  # Documentação adicional
+└── tests/                 # Testes automatizados
+```
+
+## 🎯 Roadmap
+
+### Versão 2.1 (Em Desenvolvimento)
+- [ ] Autenticação de dois fatores (2FA)
+- [ ] Chat em tempo real
+- [ ] Integração WhatsApp Business
+- [ ] App mobile publicado nas stores
+- [ ] Dashboard customizável
+
+### Versão 2.2 (Planejado)
+- [ ] Módulo financeiro completo
+- [ ] Integração com gateways de pagamento
+- [ ] Relatórios avançados com BI
+- [ ] API pública documentada
+- [ ] Temas personalizáveis
+
+## 🤝 Contribuindo
+
+Contribuições são sempre bem-vindas!
+
+1. Fork o projeto
+2. Crie uma branch (`git checkout -b feature/NovaFuncionalidade`)
+3. Commit suas mudanças (`git commit -m 'Adiciona nova funcionalidade'`)
+4. Push para a branch (`git push origin feature/NovaFuncionalidade`)
+5. Abra um Pull Request
+
+## 📄 Licença
+
+Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+
+## 👨‍💻 Autor
+
+**Cristiano Superação**
+
+- GitHub: [@cristiano-superacao](https://github.com/cristiano-superacao)
+- LinkedIn: [Seu LinkedIn](#)
+
+## 🙏 Agradecimentos
+
+- [Netlify](https://netlify.com) - Hospedagem e deploy
+- [Supabase](https://supabase.com) - Banco de dados
+- [Font Awesome](https://fontawesome.com) - Ícones
+- [Google Fonts](https://fonts.google.com) - Tipografia
+- Comunidade Open Source
+
+---
+
+<div align="center">
+
+**⭐ Se este projeto foi útil, considere dar uma estrela!**
+
+Made with ❤️ by Cristiano Superação
+
+</div>
 3. Digite a senha master: `NetBairro@Admin2024#`
 4. Gerencie usuários e configurações
 

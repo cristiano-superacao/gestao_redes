@@ -113,73 +113,108 @@
         <section class="login-section">
             <div class="login-card">
                 <div class="login-header">
-                    <h2 class="login-title">Acesse o Sistema</h2>
-                    <p class="login-subtitle">Entre com suas credenciais para começar</p>
+                    <div class="login-icon">
+                        <i class="fas fa-lock-open"></i>
+                    </div>
+                    <h2 class="login-title">Bem-vindo de volta!</h2>
+                    <p class="login-subtitle">Entre com suas credenciais para acessar o sistema</p>
                 </div>
                 
                 <form class="login-form" id="loginForm">
                     <div class="form-group">
                         <label for="email" class="form-label">
                             <i class="fas fa-envelope"></i>
-                            E-mail
+                            <span>E-mail</span>
                         </label>
-                        <input 
-                            type="email" 
-                            id="email" 
-                            class="form-input" 
-                            placeholder="seu@email.com"
-                            required
-                        >
+                        <div class="input-wrapper">
+                            <input 
+                                type="email" 
+                                id="email" 
+                                class="form-input" 
+                                placeholder="seu@email.com"
+                                autocomplete="email"
+                                required
+                            >
+                            <div class="input-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="form-group">
                         <label for="password" class="form-label">
                             <i class="fas fa-lock"></i>
-                            Senha
+                            <span>Senha</span>
                         </label>
-                        <div class="password-input">
+                        <div class="input-wrapper">
                             <input 
                                 type="password" 
                                 id="password" 
-                                class="form-input" 
-                                placeholder="••••••••"
+                                class="form-input password-field" 
+                                placeholder="Digite sua senha"
+                                autocomplete="current-password"
                                 required
                             >
-                            <button type="button" class="toggle-password" id="togglePassword">
+                            <button type="button" class="toggle-password" id="togglePassword" aria-label="Mostrar senha">
                                 <i class="fas fa-eye"></i>
                             </button>
+                        </div>
+                        <div class="password-strength" id="passwordStrength">
+                            <div class="strength-bar">
+                                <div class="strength-fill"></div>
+                            </div>
                         </div>
                     </div>
                     
                     <div class="form-options">
-                        <label class="checkbox-label">
+                        <label class="checkbox-container">
                             <input type="checkbox" id="remember">
-                            <span>Lembrar-me</span>
+                            <span class="checkmark"></span>
+                            <span class="checkbox-text">Lembrar-me</span>
                         </label>
-                        <a href="#" class="forgot-password">Esqueceu a senha?</a>
+                        <a href="#" class="forgot-password" id="forgotPassword">
+                            <i class="fas fa-key"></i>
+                            Esqueceu a senha?
+                        </a>
                     </div>
                     
-                    <button type="submit" class="btn-primary">
-                        <span>Entrar no Sistema</span>
-                        <i class="fas fa-arrow-right"></i>
+                    <button type="submit" class="btn-primary btn-login">
+                        <span class="btn-text">Entrar no Sistema</span>
+                        <span class="btn-loader" style="display: none;">
+                            <i class="fas fa-spinner fa-spin"></i>
+                        </span>
+                        <i class="fas fa-arrow-right btn-arrow"></i>
                     </button>
                     
                     <div class="divider">
-                        <span>ou</span>
+                        <span>ou continue com</span>
                     </div>
                     
-                    <button type="button" class="btn-secondary" id="googleLogin">
-                        <i class="fab fa-google"></i>
-                        <span>Entrar com Google</span>
-                    </button>
+                    <div class="social-login">
+                        <button type="button" class="btn-social btn-google" id="googleLogin">
+                            <i class="fab fa-google"></i>
+                            <span>Google</span>
+                        </button>
+                        <button type="button" class="btn-social btn-microsoft" id="microsoftLogin">
+                            <i class="fab fa-microsoft"></i>
+                            <span>Microsoft</span>
+                        </button>
+                    </div>
                 </form>
                 
                 <div class="login-footer">
-                    <p>Não tem uma conta? <a href="#" class="link">Solicitar acesso</a></p>
+                    <p class="footer-text">
+                        Não tem uma conta? 
+                        <a href="#" class="link link-primary" id="requestAccess">
+                            <i class="fas fa-user-plus"></i>
+                            Solicitar acesso
+                        </a>
+                    </p>
+                    <div class="divider-small"></div>
                     <p class="admin-access">
                         <a href="#" class="link admin-link" id="adminAccess">
-                            <i class="fas fa-shield-alt"></i>
-                            Acesso Administrativo
+                            <i class="fas fa-shield-halved"></i>
+                            <span>Acesso Administrativo</span>
                         </a>
                     </p>
                 </div>
@@ -304,31 +339,41 @@
     <!-- Modal Admin Login -->
     <div class="modal" id="adminModal">
         <div class="modal-backdrop"></div>
-        <div class="modal-content">
+        <div class="modal-content modal-admin">
             <div class="modal-header">
-                <h3><i class="fas fa-shield-alt"></i> Acesso Administrativo</h3>
-                <button class="modal-close" id="adminModalClose">
+                <div class="modal-icon">
+                    <i class="fas fa-shield-halved"></i>
+                </div>
+                <h3>Acesso Administrativo</h3>
+                <button class="modal-close" id="adminModalClose" aria-label="Fechar modal">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
             <div class="modal-body">
+                <p class="modal-description">Digite a senha master para acessar o painel de administração</p>
                 <form id="adminLoginForm" class="admin-form">
                     <div class="form-group">
                         <label for="adminPassword" class="form-label">
                             <i class="fas fa-key"></i>
-                            Senha Master
+                            <span>Senha Master</span>
                         </label>
-                        <input 
-                            type="password" 
-                            id="adminPassword" 
-                            class="form-input" 
-                            placeholder="Digite a senha de administrador"
-                            required
-                        >
+                        <div class="input-wrapper">
+                            <input 
+                                type="password" 
+                                id="adminPassword" 
+                                class="form-input password-field" 
+                                placeholder="Digite a senha de administrador"
+                                autocomplete="current-password"
+                                required
+                            >
+                            <button type="button" class="toggle-password" id="toggleAdminPassword" aria-label="Mostrar senha">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
                     </div>
-                    <button type="submit" class="btn-primary full-width">
-                        <span>Acessar Painel Admin</span>
-                        <i class="fas fa-arrow-right"></i>
+                    <button type="submit" class="btn-primary full-width btn-admin">
+                        <span class="btn-text">Acessar Painel Admin</span>
+                        <i class="fas fa-arrow-right btn-arrow"></i>
                     </button>
                 </form>
             </div>
@@ -338,68 +383,91 @@
     <!-- Modal Request Access -->
     <div class="modal" id="requestModal">
         <div class="modal-backdrop"></div>
-        <div class="modal-content">
+        <div class="modal-content modal-request">
             <div class="modal-header">
-                <h3><i class="fas fa-user-plus"></i> Solicitar Acesso</h3>
-                <button class="modal-close" id="requestModalClose">
+                <div class="modal-icon modal-icon-request">
+                    <i class="fas fa-user-plus"></i>
+                </div>
+                <h3>Solicitar Acesso</h3>
+                <button class="modal-close" id="requestModalClose" aria-label="Fechar modal">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
             <div class="modal-body">
+                <p class="modal-description">Preencha o formulário abaixo para solicitar acesso ao sistema</p>
                 <form id="requestAccessForm" class="request-form">
                     <div class="form-group">
                         <label for="requestName" class="form-label">
                             <i class="fas fa-user"></i>
-                            Nome Completo
+                            <span>Nome Completo</span>
                         </label>
-                        <input 
-                            type="text" 
-                            id="requestName" 
-                            class="form-input" 
-                            placeholder="Seu nome completo"
-                            required
-                        >
+                        <div class="input-wrapper">
+                            <input 
+                                type="text" 
+                                id="requestName" 
+                                class="form-input" 
+                                placeholder="Seu nome completo"
+                                autocomplete="name"
+                                required
+                            >
+                            <div class="input-icon">
+                                <i class="fas fa-user"></i>
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="requestEmail" class="form-label">
                             <i class="fas fa-envelope"></i>
-                            E-mail
+                            <span>E-mail</span>
                         </label>
-                        <input 
-                            type="email" 
-                            id="requestEmail" 
-                            class="form-input" 
-                            placeholder="seu@email.com"
-                            required
-                        >
+                        <div class="input-wrapper">
+                            <input 
+                                type="email" 
+                                id="requestEmail" 
+                                class="form-input" 
+                                placeholder="seu@email.com"
+                                autocomplete="email"
+                                required
+                            >
+                            <div class="input-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="requestCompany" class="form-label">
                             <i class="fas fa-building"></i>
-                            Empresa/Provedor
+                            <span>Empresa/Provedor</span>
                         </label>
-                        <input 
-                            type="text" 
-                            id="requestCompany" 
-                            class="form-input" 
-                            placeholder="Nome da sua empresa"
-                            required
-                        >
+                        <div class="input-wrapper">
+                            <input 
+                                type="text" 
+                                id="requestCompany" 
+                                class="form-input" 
+                                placeholder="Nome da sua empresa"
+                                autocomplete="organization"
+                                required
+                            >
+                            <div class="input-icon">
+                                <i class="fas fa-building"></i>
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="requestReason" class="form-label">
                             <i class="fas fa-comment"></i>
-                            Motivo do Acesso
+                            <span>Motivo do Acesso</span>
                         </label>
                         <textarea 
                             id="requestReason" 
                             class="form-textarea" 
                             placeholder="Descreva brevemente o motivo da solicitação..."
+                            rows="4"
                             required
                         ></textarea>
                     </div>
-                    <button type="submit" class="btn-primary full-width">
-                        <span>Enviar Solicitação</span>
+                    <button type="submit" class="btn-primary full-width btn-request">
+                        <span class="btn-text">Enviar Solicitação</span>
                         <i class="fas fa-paper-plane"></i>
                     </button>
                 </form>

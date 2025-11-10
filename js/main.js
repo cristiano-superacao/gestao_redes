@@ -100,6 +100,18 @@ function setupEventListeners() {
         adminForm.addEventListener('submit', handleAdminLogin);
     }
     
+    // Toggle admin password
+    const toggleAdminPassword = document.getElementById('toggleAdminPassword');
+    const adminPasswordInput = document.getElementById('adminPassword');
+    if (toggleAdminPassword && adminPasswordInput) {
+        toggleAdminPassword.addEventListener('click', () => {
+            const isPassword = adminPasswordInput.type === 'password';
+            adminPasswordInput.type = isPassword ? 'text' : 'password';
+            toggleAdminPassword.querySelector('i').className = 
+                isPassword ? 'fas fa-eye-slash' : 'fas fa-eye';
+        });
+    }
+    
     // Request access link
     const requestAccessLink = document.querySelector('a[href="#"]:not(.admin-link)');
     if (requestAccessLink) {
@@ -142,6 +154,37 @@ function setupEventListeners() {
             togglePassword.querySelector('i').className = 
                 isPassword ? 'fas fa-eye-slash' : 'fas fa-eye';
         });
+        
+        // Password strength indicator
+        passwordInput.addEventListener('input', () => {
+            updatePasswordStrength(passwordInput.value);
+        });
+    }
+    
+    // Microsoft login button
+    const microsoftLoginBtn = document.getElementById('microsoftLogin');
+    if (microsoftLoginBtn) {
+        microsoftLoginBtn.addEventListener('click', () => {
+            showNotification('Login com Microsoft em breve!', 'info');
+        });
+    }
+    
+    // Request access link
+    const requestAccessBtn = document.getElementById('requestAccess');
+    if (requestAccessBtn) {
+        requestAccessBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            showModal('requestModal');
+        });
+    }
+    
+    // Forgot password link
+    const forgotPasswordBtn = document.getElementById('forgotPassword');
+    if (forgotPasswordBtn) {
+        forgotPasswordBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            showNotification('Recuperação de senha em breve!', 'info');
+        });
     }
     
     // Remember me checkbox
@@ -173,21 +216,72 @@ function setupEventListeners() {
     }
 }
 
+// ===== Password Strength Indicator =====
+function updatePasswordStrength(password) {
+    const strengthIndicator = document.getElementById('passwordStrength');
+    const strengthFill = document.querySelector('.strength-fill');
+    
+    if (!strengthIndicator || !strengthFill || !password) {
+        if (strengthIndicator) {
+            strengthIndicator.classList.remove('active');
+        }
+        return;
+    }
+    
+    strengthIndicator.classList.add('active');
+    
+    let strength = 0;
+    
+    // Length check
+    if (password.length >= 8) strength++;
+    if (password.length >= 12) strength++;
+    
+    // Character variety checks
+    if (/[a-z]/.test(password)) strength++;
+    if (/[A-Z]/.test(password)) strength++;
+    if (/[0-9]/.test(password)) strength++;
+    if (/[^a-zA-Z0-9]/.test(password)) strength++;
+    
+    // Update visual indicator
+    strengthFill.className = 'strength-fill';
+    
+    if (strength <= 2) {
+        strengthFill.classList.add('weak');
+    } else if (strength <= 4) {
+        strengthFill.classList.add('medium');
+    } else {
+        strengthFill.classList.add('strong');
+    }
+}
+
 // ===== Autenticação =====
 async function handleLogin(event) {
     event.preventDefault();
     
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
+    const submitBtn = event.target.querySelector('.btn-login');
     
     if (!email || !password) {
         showNotification('Preencha todos os campos', 'error');
         return;
     }
     
+    // Add loading state to button
+    if (submitBtn) {
+        submitBtn.classList.add('loading');
+        submitBtn.disabled = true;
+    }
+    
     showLoading('Fazendo login...');
     
     try {
+        // Save email if remember me is checked
+        const rememberCheckbox = document.getElementById('remember');
+        if (rememberCheckbox && rememberCheckbox.checked) {
+            localStorage.setItem('savedEmail', email);
+        }
+        
         // Simular login local em desenvolvimento
         if (CONFIG.isDevelopment) {
             await simulateLogin(email, password);
@@ -198,6 +292,10 @@ async function handleLogin(event) {
         showNotification(error.message || 'Erro no login', 'error');
     } finally {
         hideLoading();
+        if (submitBtn) {
+            submitBtn.classList.remove('loading');
+            submitBtn.disabled = false;
+        }
     }
 }
 
@@ -223,16 +321,26 @@ async function handleGoogleLogin(event) {
                 const result = await new Promise((resolve, reject) => {
                     google.accounts.id.prompt((notification) => {
                         if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
-                            reject(new Error('Login cancelado'));
+                            // Usuário cancelou ou popup não foi exibido - não é erro
+                            resolve(null);
                         }
                     });
                 });
+                
+                if (!result) {
+                    // Popup foi cancelado, apenas esconde o loading sem mostrar erro
+                    hideLoading();
+                    return;
+                }
             } else {
                 throw new Error('Google OAuth não configurado');
             }
         }
     } catch (error) {
-        showNotification(error.message || 'Erro no login do Google', 'error');
+        // Só mostra erro se não for cancelamento do usuário
+        if (error.message !== 'Login cancelado') {
+            showNotification(error.message || 'Erro no login do Google', 'error');
+        }
     } finally {
         hideLoading();
     }
@@ -1712,19 +1820,26 @@ function showNotification(message, type = 'success') {
     
     span.textContent = message;
     
-    // Definir ícone e cor baseado no tipo
+    // Remover classes de tipo anteriores
+    toast.classList.remove('toast-success', 'toast-error', 'toast-warning', 'toast-info');
+    
+    // Definir ícone e classe baseado no tipo
     switch (type) {
         case 'error':
             icon.className = 'fas fa-exclamation-triangle';
-            toast.style.background = '#ef4444';
+            toast.classList.add('toast-error');
             break;
         case 'warning':
             icon.className = 'fas fa-exclamation-circle';
-            toast.style.background = '#f59e0b';
+            toast.classList.add('toast-warning');
+            break;
+        case 'info':
+            icon.className = 'fas fa-info-circle';
+            toast.classList.add('toast-info');
             break;
         default:
             icon.className = 'fas fa-check-circle';
-            toast.style.background = '#10b981';
+            toast.classList.add('toast-success');
     }
     
     toast.classList.add('show');
