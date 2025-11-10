@@ -1,33 +1,39 @@
 {
-  "name": "netbairro-manager",
-  "version": "1.0.0",
-  "description": "Sistema profissional de gerenciamento e monitoramento de rede para provedores de internet",
+  "name": "gestao-provedores",
+  "version": "2.0.0",
+  "description": "Sistema profissional de gerenciamento e monitoramento de rede para provedores de internet com PWA, JWT e APIs de monitoramento",
   "main": "index.html",
   "scripts": {
     "build": "echo 'Build concluído'",
     "dev": "python -m http.server 8080",
     "deploy": "netlify deploy --prod",
-    "preview": "netlify deploy"
+    "preview": "netlify deploy",
+    "install-deps": "npm install"
   },
   "keywords": [
-    "netbairro",
+    "gestao-provedores",
     "provedor",
     "internet",
     "gestao",
     "rede",
-    "isp"
+    "isp",
+    "pwa",
+    "jwt",
+    "monitoring"
   ],
-  "author": "NetBairro Manager",
+  "author": "Gestão de Provedores",
   "license": "MIT",
   "dependencies": {
-    "@supabase/supabase-js": "^2.38.0"
+    "@supabase/supabase-js": "^2.38.0",
+    "jsonwebtoken": "^9.0.2",
+    "node-fetch": "^3.3.2"
   },
   "devDependencies": {
     "netlify-cli": "^17.0.0"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/seu-usuario/netbairro-manager.git"
+    "url": "https://github.com/cristiano-superacao/gestao_redes.git"
   },
   "homepage": "https://netbairro-manager.netlify.app",
   "engines": {

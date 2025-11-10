@@ -1,12 +1,40 @@
-// ===== Netlify Function: Autenticação =====
+// ===== Netlify Function: Autenticação JWT =====
 
 import { createClient } from '@supabase/supabase-js'
+import jwt from 'jsonwebtoken'
 
 const supabaseUrl = process.env.SUPABASE_URL
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
 const adminPassword = process.env.ADMIN_PASSWORD || 'GestaoProvedores@2025#'
+const JWT_SECRET = process.env.JWT_SECRET || 'gestao-provedores-secret-key-2025'
+const JWT_REFRESH_SECRET = process.env.JWT_REFRESH_SECRET || 'gestao-provedores-refresh-secret-2025'
 
 const supabase = createClient(supabaseUrl, supabaseServiceKey)
+
+// ===== JWT Helper Functions =====
+function generateToken(payload, expiresIn = '1h') {
+  return jwt.sign(payload, JWT_SECRET, { expiresIn })
+}
+
+function generateRefreshToken(payload) {
+  return jwt.sign(payload, JWT_REFRESH_SECRET, { expiresIn: '7d' })
+}
+
+function verifyToken(token) {
+  try {
+    return jwt.verify(token, JWT_SECRET)
+  } catch (error) {
+    throw new Error('Token inválido ou expirado')
+  }
+}
+
+function verifyRefreshToken(token) {
+  try {
+    return jwt.verify(token, JWT_REFRESH_SECRET)
+  } catch (error) {
+    throw new Error('Refresh token inválido ou expirado')
+  }
+}
 
 export const handler = async (event, context) => {
   // Configurar CORS

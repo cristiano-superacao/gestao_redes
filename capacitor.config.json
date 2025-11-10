@@ -1,0 +1,49 @@
+{
+  "appId": "com.gestaoprovedores.app",
+  "appName": "Gestão de Provedores",
+  "webDir": ".",
+  "server": {
+    "androidScheme": "https",
+    "hostname": "app.gestaoprovedores.com",
+    "iosScheme": "ionic"
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 2000,
+      "launchAutoHide": true,
+      "backgroundColor": "#2563eb",
+      "androidScaleType": "CENTER_CROP",
+      "showSpinner": false,
+      "androidSpinnerStyle": "large",
+      "iosSpinnerStyle": "small",
+      "spinnerColor": "#ffffff"
+    },
+    "StatusBar": {
+      "style": "dark",
+      "backgroundColor": "#2563eb"
+    },
+    "Keyboard": {
+      "resize": "body",
+      "style": "dark",
+      "resizeOnFullScreen": true
+    },
+    "PushNotifications": {
+      "presentationOptions": ["badge", "sound", "alert"]
+    },
+    "LocalNotifications": {
+      "smallIcon": "ic_stat_icon_config_sample",
+      "iconColor": "#2563eb"
+    }
+  },
+  "android": {
+    "buildOptions": {
+      "keystorePath": "release.keystore",
+      "keystoreAlias": "gestao-provedores"
+    },
+    "allowMixedContent": true
+  },
+  "ios": {
+    "contentInset": "automatic",
+    "scheme": "Gestão ISP"
+  }
+}

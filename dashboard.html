@@ -9,6 +9,10 @@
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
     
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#2563eb">
+    
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,6 +26,7 @@
     
     <!-- Estilos -->
     <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/dashboard.css">
 </head>
 <body class="dashboard-body">
@@ -433,7 +438,10 @@
 
     <!-- Scripts -->
     <script src="config/database.js"></script>
+    <script src="js/jwt-auth.js"></script>
+    <script src="js/monitoring-service.js"></script>
     <script src="js/main.js"></script>
     <script src="js/dashboard.js"></script>
+
 </body>
 </html>
