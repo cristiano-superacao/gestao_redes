@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dashboard do NetBairro Manager - Painel de controle para gestão de rede">
+    <title>Dashboard - NetBairro Manager</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Estilos -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body class="dashboard-body">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <i class="fas fa-network-wired"></i>
+                <span class="sidebar-title">NetBairro</span>
+            </div>
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <nav class="sidebar-nav">
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#dashboard" class="nav-link active" data-section="dashboard">
+                        <i class="fas fa-chart-pie"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#clientes" class="nav-link" data-section="clientes">
+                        <i class="fas fa-users"></i>
+                        <span>Clientes</span>
+                        <span class="nav-badge">1,247</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#rede" class="nav-link" data-section="rede">
+                        <i class="fas fa-project-diagram"></i>
+                        <span>Monitoramento</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#financeiro" class="nav-link" data-section="financeiro">
+                        <i class="fas fa-dollar-sign"></i>
+                        <span>Financeiro</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#suporte" class="nav-link" data-section="suporte">
+                        <i class="fas fa-headset"></i>
+                        <span>Suporte</span>
+                        <span class="nav-badge alert">5</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#relatorios" class="nav-link" data-section="relatorios">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Relatórios</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#configuracoes" class="nav-link" data-section="configuracoes">
+                        <i class="fas fa-cog"></i>
+                        <span>Configurações</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="user-profile">
+                <div class="user-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="user-info">
+                    <div class="user-name">Admin</div>
+                    <div class="user-role">Administrador</div>
+                </div>
+                <button class="user-menu-toggle" id="userMenuToggle">
+                    <i class="fas fa-chevron-up"></i>
+                </button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <header class="main-header">
+            <div class="header-left">
+                <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h1 class="page-title" id="pageTitle">Dashboard</h1>
+            </div>
+            
+            <div class="header-right">
+                <!-- Search -->
+                <div class="search-container">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Pesquisar..." class="search-input">
+                </div>
+
+                <!-- Notifications -->
+                <div class="notification-dropdown">
+                    <button class="notification-toggle" id="notificationToggle">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge">3</span>
+                    </button>
+                    <div class="notification-menu" id="notificationMenu">
+                        <div class="notification-header">
+                            <h3>Notificações</h3>
+                            <button class="mark-all-read">Marcar todas como lidas</button>
+                        </div>
+                        <div class="notification-list">
+                            <div class="notification-item unread">
+                                <div class="notification-icon">
+                                    <i class="fas fa-exclamation-triangle text-warning"></i>
+                                </div>
+                                <div class="notification-content">
+                                    <p class="notification-title">Servidor com alta latência</p>
+                                    <p class="notification-desc">Servidor SP-01 apresentando latência elevada</p>
+                                    <span class="notification-time">5 min atrás</span>
+                                </div>
+                            </div>
+                            <div class="notification-item unread">
+                                <div class="notification-icon">
+                                    <i class="fas fa-user-plus text-success"></i>
+                                </div>
+                                <div class="notification-content">
+                                    <p class="notification-title">Novo cliente cadastrado</p>
+                                    <p class="notification-desc">João Silva foi adicionado ao sistema</p>
+                                    <span class="notification-time">10 min atrás</span>
+                                </div>
+                            </div>
+                            <div class="notification-item">
+                                <div class="notification-icon">
+                                    <i class="fas fa-check-circle text-success"></i>
+                                </div>
+                                <div class="notification-content">
+                                    <p class="notification-title">Backup concluído</p>
+                                    <p class="notification-desc">Backup automático realizado com sucesso</p>
+                                    <span class="notification-time">1 hora atrás</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- User Menu -->
+                <div class="user-dropdown">
+                    <button class="user-toggle" id="userToggle">
+                        <div class="user-avatar-small">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="user-menu" id="userMenu">
+                        <a href="#" class="user-menu-item">
+                            <i class="fas fa-user"></i>
+                            <span>Meu Perfil</span>
+                        </a>
+                        <a href="#" class="user-menu-item">
+                            <i class="fas fa-cog"></i>
+                            <span>Configurações</span>
+                        </a>
+                        <a href="#" class="user-menu-item">
+                            <i class="fas fa-question-circle"></i>
+                            <span>Ajuda</span>
+                        </a>
+                        <div class="user-menu-divider"></div>
+                        <a href="index.html" class="user-menu-item logout">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Sair</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dashboard Content -->
+        <div class="content-area">
+            <!-- Dashboard Section -->
+            <section id="dashboard-section" class="content-section active">
+                <!-- KPI Cards -->
+                <div class="kpi-grid">
+                    <div class="kpi-card">
+                        <div class="kpi-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="kpi-content">
+                            <h3 class="kpi-value" data-target="1247">0</h3>
+                            <p class="kpi-label">Clientes Ativos</p>
+                            <div class="kpi-trend positive">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>+12%</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="kpi-card">
+                        <div class="kpi-icon">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <div class="kpi-content">
+                            <h3 class="kpi-value">R$ 78.540</h3>
+                            <p class="kpi-label">Receita Mensal</p>
+                            <div class="kpi-trend positive">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>+8%</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="kpi-card">
+                        <div class="kpi-icon">
+                            <i class="fas fa-server"></i>
+                        </div>
+                        <div class="kpi-content">
+                            <h3 class="kpi-value">99.8%</h3>
+                            <p class="kpi-label">Uptime</p>
+                            <div class="kpi-trend neutral">
+                                <i class="fas fa-minus"></i>
+                                <span>0%</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="kpi-card">
+                        <div class="kpi-icon">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <div class="kpi-content">
+                            <h3 class="kpi-value" data-target="5">0</h3>
+                            <p class="kpi-label">Chamados Abertos</p>
+                            <div class="kpi-trend negative">
+                                <i class="fas fa-arrow-down"></i>
+                                <span>-20%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Row -->
+                <div class="charts-row">
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h3>Uso da Banda</h3>
+                            <div class="chart-actions">
+                                <select class="chart-period">
+                                    <option>Últimas 24h</option>
+                                    <option>Última semana</option>
+                                    <option>Último mês</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="chart-body">
+                            <canvas id="bandwidthChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h3>Status da Rede</h3>
+                        </div>
+                        <div class="chart-body">
+                            <canvas id="networkChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="activity-section">
+                    <div class="section-header">
+                        <h3>Atividade Recente</h3>
+                        <a href="#" class="see-all">Ver todas</a>
+                    </div>
+                    <div class="activity-list">
+                        <div class="activity-item">
+                            <div class="activity-icon">
+                                <i class="fas fa-user-plus text-success"></i>
+                            </div>
+                            <div class="activity-content">
+                                <p><strong>João Silva</strong> foi cadastrado como novo cliente</p>
+                                <span class="activity-time">5 minutos atrás</span>
+                            </div>
+                        </div>
+                        
+                        <div class="activity-item">
+                            <div class="activity-icon">
+                                <i class="fas fa-exclamation-triangle text-warning"></i>
+                            </div>
+                            <div class="activity-content">
+                                <p>Detectada alta latência no <strong>Servidor SP-01</strong></p>
+                                <span class="activity-time">12 minutos atrás</span>
+                            </div>
+                        </div>
+                        
+                        <div class="activity-item">
+                            <div class="activity-icon">
+                                <i class="fas fa-credit-card text-info"></i>
+                            </div>
+                            <div class="activity-content">
+                                <p>Pagamento de <strong>R$ 89,90</strong> recebido de Maria Santos</p>
+                                <span class="activity-time">25 minutos atrás</span>
+                            </div>
+                        </div>
+                        
+                        <div class="activity-item">
+                            <div class="activity-icon">
+                                <i class="fas fa-tools text-primary"></i>
+                            </div>
+                            <div class="activity-content">
+                                <p>Manutenção programada concluída no <strong>Switch Central</strong></p>
+                                <span class="activity-time">1 hora atrás</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Clientes Section -->
+            <section id="clientes-section" class="content-section">
+                <div class="section-header">
+                    <h2>Gestão de Clientes</h2>
+                    <button class="btn-primary">
+                        <i class="fas fa-plus"></i>
+                        Novo Cliente
+                    </button>
+                </div>
+                
+                <div class="table-container">
+                    <div class="table-filters">
+                        <input type="text" placeholder="Pesquisar cliente..." class="search-input">
+                        <select class="filter-select">
+                            <option>Todos os status</option>
+                            <option>Ativo</option>
+                            <option>Inativo</option>
+                            <option>Suspenso</option>
+                        </select>
+                    </div>
+                    
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Cliente</th>
+                                <th>Plano</th>
+                                <th>Status</th>
+                                <th>Último Pagamento</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="client-info">
+                                        <div class="client-avatar">JS</div>
+                                        <div>
+                                            <div class="client-name">João Silva</div>
+                                            <div class="client-email">joao@email.com</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="plan-badge">100 Mbps</span>
+                                </td>
+                                <td>
+                                    <span class="status-badge active">Ativo</span>
+                                </td>
+                                <td>15/10/2024</td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn-icon" title="Editar">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn-icon" title="Ver detalhes">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="btn-icon" title="Suspender">
+                                            <i class="fas fa-pause"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Mais linhas aqui -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Outras seções seriam adicionadas aqui -->
+        </div>
+    </main>
+
+    <!-- Modal -->
+    <div class="modal" id="modal">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Título do Modal</h3>
+                <button class="modal-close" id="modalClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Conteúdo do modal -->
+            </div>
+            <div class="modal-footer" id="modalFooter">
+                <button class="btn-secondary" id="modalCancel">Cancelar</button>
+                <button class="btn-primary" id="modalConfirm">Confirmar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+    <script src="dashboard.js"></script>
+</body>
+</html>

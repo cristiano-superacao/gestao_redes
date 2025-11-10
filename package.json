@@ -1,0 +1,36 @@
+{
+  "name": "netbairro-manager",
+  "version": "1.0.0",
+  "description": "Sistema profissional de gerenciamento e monitoramento de rede para provedores de internet",
+  "main": "index.html",
+  "scripts": {
+    "build": "echo 'Build concluído'",
+    "dev": "python -m http.server 8080",
+    "deploy": "netlify deploy --prod",
+    "preview": "netlify deploy"
+  },
+  "keywords": [
+    "netbairro",
+    "provedor",
+    "internet",
+    "gestao",
+    "rede",
+    "isp"
+  ],
+  "author": "NetBairro Manager",
+  "license": "MIT",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.38.0"
+  },
+  "devDependencies": {
+    "netlify-cli": "^17.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/seu-usuario/netbairro-manager.git"
+  },
+  "homepage": "https://netbairro-manager.netlify.app",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
