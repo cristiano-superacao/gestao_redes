@@ -132,6 +132,7 @@ async function handleAdminLogin(event) {
     
     const formData = new FormData(event.target);
     const password = formData.get('adminPassword');
+    const ADMIN_PASSWORD = "NetBairro@Admin2024#"; // Senha master como fallback
     
     if (!password) {
         showNotification('Digite a senha de administrador', 'error');
@@ -141,33 +142,61 @@ async function handleAdminLogin(event) {
     try {
         showLoading('Verificando credenciais...');
         
-        const result = await apiCall('/auth', {
-            action: 'admin_login',
-            password: password
-        });
+        // Tentar via API primeiro
+        try {
+            const result = await apiCall('/auth', {
+                action: 'admin_login',
+                password: password
+            });
+
+            if (result.success) {
+                isAdmin = true;
+                localStorage.setItem('isAdmin', 'true');
+                
+                showNotification('Login administrativo realizado!', 'success');
+                
+                // Fechar modal
+                document.getElementById('adminModal').style.display = 'none';
+                
+                // Redirecionar para admin
+                setTimeout(() => {
+                    window.location.href = 'admin.html';
+                }, 1500);
+                hideLoading();
+                return;
+            }
+        } catch (apiError) {
+            console.warn('API não disponível, usando validação local:', apiError);
+            
+            // Fallback: validação local
+            if (password === ADMIN_PASSWORD) {
+                isAdmin = true;
+                localStorage.setItem('isAdmin', 'true');
+                localStorage.setItem('adminLoginTime', new Date().toISOString());
+                
+                showNotification('Login administrativo realizado!', 'success');
+                
+                // Fechar modal
+                document.getElementById('adminModal').style.display = 'none';
+                
+                // Redirecionar para admin
+                setTimeout(() => {
+                    window.location.href = 'admin.html';
+                }, 1500);
+                hideLoading();
+                return;
+            } else {
+                throw new Error('Senha de administrador incorreta');
+            }
+        }
 
         hideLoading();
-
-        if (result.success) {
-            isAdmin = true;
-            localStorage.setItem('isAdmin', 'true');
-            
-            showNotification('Login administrativo realizado!', 'success');
-            
-            // Fechar modal
-            document.getElementById('adminModal').style.display = 'none';
-            
-            // Redirecionar para admin
-            setTimeout(() => {
-                window.location.href = 'admin.html';
-            }, 1500);
-        } else {
-            showNotification(result.error || 'Senha incorreta', 'error');
-        }
+        showNotification('Senha incorreta', 'error');
+        
     } catch (error) {
         hideLoading();
         console.error('Erro no login admin:', error);
-        showNotification('Erro ao verificar credenciais', 'error');
+        showNotification(error.message || 'Erro ao verificar credenciais', 'error');
     }
 }
 

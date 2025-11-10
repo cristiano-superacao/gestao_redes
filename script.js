@@ -517,11 +517,25 @@ class FormManager {
         e.preventDefault();
         
         const password = document.getElementById('adminPassword').value;
+        const ADMIN_PASSWORD = "NetBairro@Admin2024#"; // Senha master do administrador
+        
+        if (!password) {
+            window.toastManager.show('Digite a senha de administrador', 'error');
+            return;
+        }
         
         window.loadingManager.show('Verificando credenciais...');
         
         try {
-            await window.authService.adminLogin(password);
+            // Verificar senha
+            if (password !== ADMIN_PASSWORD) {
+                throw new Error('Senha de administrador incorreta');
+            }
+            
+            // Salvar estado de admin
+            localStorage.setItem('isAdmin', 'true');
+            localStorage.setItem('adminLoginTime', new Date().toISOString());
+            
             window.toastManager.show('Acesso administrativo autorizado!', 'success');
             this.closeModals();
             
